@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { TypeORMUserRepository } from '../../infrastructure/database/repositories/typeorm-user.repository';
-import { CreateUserUseCase } from '../../application/use-cases/create-user.usecase';
-import { AuthLoginUseCase } from '../../application/use-cases/auth-login.usecase';
+import { TypeORMUserRepository } from '@infrastructure/database/repositories/typeorm-user.repository';
+import { CreateUserUseCase } from '@application/use-cases/create-user.usecase';
+import { AuthLoginUseCase } from '@application/use-cases/auth-login.usecase';
 
 const userRepository = new TypeORMUserRepository();
 const createUserUseCase = new CreateUserUseCase(userRepository);

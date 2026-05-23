@@ -1,5 +1,5 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
-import { AppError } from '../errors/app-error';
+import { AppError } from '@shared/errors/app-error';
 
 export function errorHandler(
   error: FastifyError | AppError | Error,

@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
-import { AppDataSource } from '../typeorm.config';
-import { UserEntity } from '../entities/user.entity';
-import { User } from '../../../domain/entities/user.entity';
-import { Email } from '../../../domain/value-objects/email';
-import { UserRepository } from '../../../domain/repositories/user.repository';
+import { AppDataSource } from '@infrastructure/database/typeorm.config';
+import { UserEntity } from '@infrastructure/database/entities/user.entity';
+import { User } from '@domain/entities/user.entity';
+import { Email } from '@domain/value-objects/email';
+import { UserRepository } from '@domain/repositories/user.repository';
 
 export class TypeORMUserRepository implements UserRepository {
   private readonly repo: Repository<UserEntity>;

@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { authRoutes } from '../controllers/auth.controller';
-import { userRoutes } from '../controllers/user.controller';
+import { authRoutes } from '@presentation/controllers/auth.controller';
+import { userRoutes } from '@presentation/controllers/user.controller';
 
 export async function routes(app: FastifyInstance) {
   app.get('/ping', async () => {

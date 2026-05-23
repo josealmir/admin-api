@@ -3,12 +3,12 @@ import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import apiReference from '@scalar/fastify-api-reference';
-import { env } from './shared/constants/env';
-import { errorHandler } from './shared/middleware/error-handler';
-import { setupHealthCheck } from './infrastructure/telemetry/health-check';
-import { setupMetricsRoute } from './infrastructure/telemetry/prometheus';
-import authPlugin from './presentation/plugins/auth.plugin';
-import { routes } from './presentation/routes';
+import { env } from '@shared/constants/env';
+import { errorHandler } from '@shared/middleware/error-handler';
+import { setupHealthCheck } from '@infrastructure/telemetry/health-check';
+import { setupMetricsRoute } from '@infrastructure/telemetry/prometheus';
+import authPlugin from '@presentation/plugins/auth.plugin';
+import { routes } from '@presentation/routes';
 
 export async function buildApp(): Promise<FastifyInstance> {
   const app = Fastify({

@@ -1,5 +1,5 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { env } from '../../shared/constants/env';
+import { env } from '@shared/constants/env';
 import path from 'path';
 
 const config: DataSourceOptions = {

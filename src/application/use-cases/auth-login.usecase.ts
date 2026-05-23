@@ -1,6 +1,6 @@
-import { UserRepository } from '../../domain/repositories/user.repository';
-import { LoginDTO } from '../dtos/user.dto';
-import { AppError } from '../../shared/errors/app-error';
+import { UserRepository } from '@domain/repositories/user.repository';
+import { LoginDTO } from '@application/dtos/user.dto';
+import { AppError } from '@shared/errors/app-error';
 import bcrypt from 'bcrypt';
 
 export class AuthLoginUseCase {

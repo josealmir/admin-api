@@ -1,8 +1,8 @@
-import { User } from '../../domain/entities/user.entity';
-import { Email } from '../../domain/value-objects/email';
-import { UserRepository } from '../../domain/repositories/user.repository';
-import { CreateUserDTO } from '../dtos/user.dto';
-import { AppError } from '../../shared/errors/app-error';
+import { User } from '@domain/entities/user.entity';
+import { Email } from '@domain/value-objects/email';
+import { UserRepository } from '@domain/repositories/user.repository';
+import { CreateUserDTO } from '@application/dtos/user.dto';
+import { AppError } from '@shared/errors/app-error';
 import bcrypt from 'bcrypt';
 
 export class CreateUserUseCase {

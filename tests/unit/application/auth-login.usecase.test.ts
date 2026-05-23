@@ -1,8 +1,8 @@
-import { AuthLoginUseCase } from '../../../src/application/use-cases/auth-login.usecase';
-import { UserRepository } from '../../../src/domain/repositories/user.repository';
-import { User } from '../../../src/domain/entities/user.entity';
-import { Email } from '../../../src/domain/value-objects/email';
-import { AppError } from '../../../src/shared/errors/app-error';
+import { AuthLoginUseCase } from '@application/use-cases/auth-login.usecase';
+import { UserRepository } from '@domain/repositories/user.repository';
+import { User } from '@domain/entities/user.entity';
+import { Email } from '@domain/value-objects/email';
+import { AppError } from '@shared/errors/app-error';
 import bcrypt from 'bcrypt';
 
 const mockRepository: jest.Mocked<UserRepository> = {

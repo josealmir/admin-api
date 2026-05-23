@@ -1,8 +1,8 @@
-import { CreateUserUseCase } from '../../../src/application/use-cases/create-user.usecase';
-import { UserRepository } from '../../../src/domain/repositories/user.repository';
-import { User } from '../../../src/domain/entities/user.entity';
-import { Email } from '../../../src/domain/value-objects/email';
-import { AppError } from '../../../src/shared/errors/app-error';
+import { CreateUserUseCase } from '@application/use-cases/create-user.usecase';
+import { UserRepository } from '@domain/repositories/user.repository';
+import { User } from '@domain/entities/user.entity';
+import { Email } from '@domain/value-objects/email';
+import { AppError } from '@shared/errors/app-error';
 
 const mockRepository: jest.Mocked<UserRepository> = {
   create: jest.fn(),

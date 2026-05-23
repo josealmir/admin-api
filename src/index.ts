@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { env } from './shared/constants/env';
-import { startTracer, shutdownTracer } from './infrastructure/telemetry/tracer';
+import { env } from '@shared/constants/env';
+import { startTracer, shutdownTracer } from '@infrastructure/telemetry/tracer';
 import { buildApp } from './app';
 
 async function main() {
