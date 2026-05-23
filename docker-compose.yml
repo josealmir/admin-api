@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: admin-api-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_NAME:-admin_api}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  admin-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: admin-api-app
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+      - "${METRICS_PORT:-9090}:9090"
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${PORT:-3000}
+      HOST: 0.0.0.0
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      DB_NAME: ${DB_NAME:-admin_api}
+      JWT_SECRET: ${JWT_SECRET:-default-secret}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      OTEL_ENDPOINT: ${OTEL_ENDPOINT:-http://otel-collector:4318/v1/traces}
+      OTEL_SERVICE_NAME: admin-api
+      METRICS_PORT: ${METRICS_PORT:-9090}
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: admin-api-otel
+    restart: unless-stopped
+    ports:
+      - "4318:4318"
+      - "55680:55680"
+    volumes:
+      - ./otel-collector.yml:/etc/otel-collector.yml:ro
+    command: ["--config=/etc/otel-collector.yml"]
+
+volumes:
+  mysql_data:
