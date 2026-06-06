@@ -1,10 +1,10 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev
-RUN npm ci --only=dev
+RUN npm i -g pnpm
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
-RUN npm run build
+RUN pnpm build && npx tsc-alias
 
 FROM node:20-alpine AS runner
 WORKDIR /app
