@@ -5,13 +5,13 @@ export class UserEntity {
   @PrimaryColumn('uuid')
   id!: string;
 
-  @Column({ length: 255 })
+  @Column({ type: 'varchar', length: 255 })
   name!: string;
 
-  @Column({ unique: true, length: 255 })
+  @Column({ type: 'varchar', unique: true, length: 255 })
   email!: string;
 
-  @Column({ name: 'password_hash', length: 255 })
+  @Column({ type: 'varchar', name: 'password_hash', length: 255 })
   passwordHash!: string;
 
   @CreateDateColumn({ name: 'created_at' })

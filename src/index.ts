@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { env } from '@shared/constants/env';
 import { startTracer, shutdownTracer } from '@infrastructure/telemetry/tracer';
+import { AppDataSource } from '@infrastructure/database/typeorm.config';
 import { buildApp } from './app';
 
 async function main() {
@@ -14,11 +15,17 @@ async function main() {
 }
 
 process.on('SIGTERM', async () => {
+  if (AppDataSource.isInitialized) {
+    await AppDataSource.destroy();
+  }
   await shutdownTracer();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
+  if (AppDataSource.isInitialized) {
+    await AppDataSource.destroy();
+  }
   await shutdownTracer();
   process.exit(0);
 });

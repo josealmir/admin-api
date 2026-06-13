@@ -9,8 +9,13 @@ import { setupHealthCheck } from '@infrastructure/telemetry/health-check';
 import { setupMetricsRoute } from '@infrastructure/telemetry/prometheus';
 import authPlugin from '@presentation/plugins/auth.plugin';
 import { routes } from '@presentation/routes';
+import { AppDataSource } from '@infrastructure/database/typeorm.config';
 
 export async function buildApp(): Promise<FastifyInstance> {
+  await AppDataSource.initialize();
+  if (env.NODE_ENV === 'development') {
+    await AppDataSource.runMigrations();
+  }
   const app = Fastify({
     logger: {
       transport: env.NODE_ENV === 'development' ? { target: 'pino-pretty' } : undefined,
