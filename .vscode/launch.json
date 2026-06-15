@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug (dev)",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeArgs": ["-r", "tsx"],
+      "program": "${workspaceFolder}/src/index.ts",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": { "NODE_ENV": "development" }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Jest (teste atual)",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runTestsByPath",
+        "${file}",
+        "--no-coverage",
+        "--verbose"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": { "NODE_ENV": "test" }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach (depurador)",
+      "port": 9229,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"]
+    }
+  ]
+}
