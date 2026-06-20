@@ -12,6 +12,25 @@ const listUsersUseCase = new ListUsersUseCase(userRepository);
 export async function userRoutes(app: FastifyInstance) {
   app.get('/users', {
     preHandler: [app.authenticate],
+    schema: {
+      security: [{ bearerAuth: [] }],
+      tags: ['Users'],
+      response: {
+        200: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              name: { type: 'string' },
+              email: { type: 'string' },
+              createdAt: { type: 'string', format: 'date-time' },
+              updatedAt: { type: 'string', format: 'date-time' },
+            },
+          },
+        },
+      },
+    },
     handler: async (_request, reply) => {
       const users = await listUsersUseCase.execute();
       return reply.send(
@@ -28,6 +47,35 @@ export async function userRoutes(app: FastifyInstance) {
 
   app.get('/users/:id', {
     preHandler: [app.authenticate],
+    schema: {
+      security: [{ bearerAuth: [] }],
+      tags: ['Users'],
+      params: {
+        type: 'object',
+        required: ['id'],
+        properties: {
+          id: { type: 'string' },
+        },
+      },
+      response: {
+        200: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' },
+            email: { type: 'string' },
+            createdAt: { type: 'string', format: 'date-time' },
+            updatedAt: { type: 'string', format: 'date-time' },
+          },
+        },
+        404: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+          },
+        },
+      },
+    },
     handler: async (request, reply) => {
       const { id } = request.params as { id: string };
       const user = await getUserUseCase.execute(id);
@@ -43,6 +91,31 @@ export async function userRoutes(app: FastifyInstance) {
 
   app.post('/users', {
     preHandler: [app.authenticate],
+    schema: {
+      security: [{ bearerAuth: [] }],
+      tags: ['Users'],
+      body: {
+        type: 'object',
+        required: ['name', 'email', 'password'],
+        properties: {
+          name: { type: 'string' },
+          email: { type: 'string', format: 'email' },
+          password: { type: 'string', minLength: 6 },
+        },
+      },
+      response: {
+        201: {
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' },
+            email: { type: 'string' },
+            createdAt: { type: 'string', format: 'date-time' },
+            updatedAt: { type: 'string', format: 'date-time' },
+          },
+        },
+      },
+    },
     handler: async (request, reply) => {
       const { name, email, password } = request.body as {
         name: string;

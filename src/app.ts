@@ -51,6 +51,15 @@ export async function buildApp(): Promise<FastifyInstance> {
         version: '1.0.0',
       },
       servers: [{ url: `http://localhost:${env.PORT}` }],
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+        },
+      },
     },
   });
 

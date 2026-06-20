@@ -3,6 +3,7 @@ import { CategoryRepository } from '@domain/repositories/category.repository';
 import { CategoryEntity } from '../entities/category.entity';
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../typeorm.config';
+import { Content } from '../entities/content.entity';
 
 export class TypeORMCategoryRepository implements CategoryRepository {
   private readonly repo: Repository<CategoryEntity>;
@@ -36,15 +37,22 @@ export class TypeORMCategoryRepository implements CategoryRepository {
     return entity ? this.toDomain(entity) : null;
   }
 
-  findAll(): Promise<Category[]> {
-    throw new Error('Method not implemented.');
+  async findAll(): Promise<Category[]> {
+    const entities = await this.repo.find();
+    return entities.map(this.toDomain.bind(this));
   }
 
-  update(id: string, entity: Partial<Category>): Promise<Category | null> {
-    throw new Error('Method not implemented.');
+  async findPaginated(size: number = 10): Promise<Content<Category>> {
+    const [entities, total] = await this.repo.findAndCount({ take: size });
+    return { data: entities.map(this.toDomain.bind(this)), total };
   }
 
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async update(id: string, entity: Partial<Category>): Promise<Category | null> {
+    await this.repo.update(id, { description: entity.description });
+    return this.findById(id);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.repo.delete(id);
   }
 }
